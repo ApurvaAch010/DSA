@@ -48,21 +48,22 @@ void mergeSort(int arr[],int left,int right){
 
 
 int main(){
-    int n,arr[100];
+    int n,arr[100],i;
     // cout<<"Enter the number of elements:";
     // cin>>n;
     printf("Enter the number of elements:");
     scanf("%d",&n);
     // cout<<"Enter the elements simulataneously:\n";
-    printf("Enter the elements simulataneously:\n");
-    for(int i=0;i<n;i++){
-       scanf("%d",&arr[i]);
+      for (i = 0; i < n; i++)
+    {
+        printf("Enter [%d] element", i + 1);
+        scanf("%d", &arr[i]);
     }
      mergeSort(arr,0,n-1);
     //  cout<<"Sorted array:\n";
      printf("Sorted array:\n");
      for(int i=0;i<n;i++){
-        printf("%d ",arr[i]);
+        printf("%d, ",arr[i]);
      }
     //  cout<<"endl";
 

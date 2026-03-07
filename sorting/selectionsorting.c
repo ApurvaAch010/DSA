@@ -3,32 +3,33 @@
 
 int main()
 {
-    int n, arr[N], temp;
+    int n, arr[N], temp,i,j,minInd;
     printf("Enter the number of elements:");
     scanf("%d", &n);
-    printf("Enter values simulataneously:");
-    for (int i = 0; i < n; i++)
+   for (i = 0; i < n; i++)
     {
-        scanf("%d", arr[i]);
+        printf("Enter arr[%d]:",i+1);
+        scanf("%d",&arr[i]);
+    
     }
-    for (int i = 0; i < n - 1; i++)
+    for (i = 0; i < n - 1; i++)
     {
-        int minInd = i;
-        for (int j = i + 1; j < n; j++)
+        minInd = i;
+        for (j = i + 1; j < n; j++)
         {
             if (arr[j] < arr[minInd])
             {
                 minInd = j;
             }
         }
-        int temp = arr[i];
+        temp = arr[i];
         arr[i] = arr[minInd];
         arr[minInd] = temp;
     }
     printf("Sorted array is: [");
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
-        printf("%d", arr[i]);
+        printf("%d, ", arr[i]);
     }
     printf("] \n");
     return 0;

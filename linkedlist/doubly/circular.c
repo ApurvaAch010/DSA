@@ -1,80 +1,84 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
+
 struct Node
 {
     int data;
     struct Node *prev;
     struct Node *next;
 };
+
 struct Node *getNode()
 {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     if (newNode == NULL)
     {
-        cout << "Error allocating memory";
+        printf("Error allocating memory\n");
         exit(1);
     }
     return newNode;
 }
-// cases:when null,when there are other nodes
+
+
 struct Node *IAF(struct Node *start, int value)
 {
     struct Node *newNode = getNode();
     newNode->data = value;
-    newNode->prev = NULL;
-    newNode->next = NULL;
+
     if (start == NULL)
     {
         newNode->next = newNode;
         newNode->prev = newNode;
+        printf("Inserted at beginning: %d\n", value);
         return newNode;
     }
+
     struct Node *last = start->prev;
 
-    start->prev = newNode;
     newNode->next = start;
     newNode->prev = last;
+    start->prev = newNode;
     last->next = newNode;
-    start = newNode;
-    return start;
+
+    printf("Inserted at beginning: %d\n", value);
+    return newNode;
 }
 
-// case:no node,othernodes
+
 struct Node *IAL(struct Node *start, int value)
 {
     struct Node *newNode = getNode();
     newNode->data = value;
-    newNode->prev = NULL;
-    newNode->next = NULL;
+
     if (start == NULL)
     {
-        newNode->prev = newNode;
         newNode->next = newNode;
+        newNode->prev = newNode;
+        printf("Inserted at last: %d\n", value);
         return newNode;
     }
+
     struct Node *last = start->prev;
+
     newNode->next = start;
     newNode->prev = last;
-    start->prev = newNode;
     last->next = newNode;
+    start->prev = newNode;
+
+    printf("Inserted at last: %d\n", value);
     return start;
 }
 
-// case: no node,other nodes,node at first position
+
 struct Node *IAKP(struct Node *start, int pos, int value)
 {
-
     if (pos == 1)
-    {
         return IAF(start, value);
-    }
-    struct Node *newNode = getNode();
-    newNode->data = value;
+
     if (start == NULL)
     {
-        newNode->next = newNode;
-        newNode->prev = newNode;
-        return newNode;
+        printf("Invalid position\n");
+        return NULL;
     }
 
     struct Node *temp = start;
@@ -82,109 +86,125 @@ struct Node *IAKP(struct Node *start, int pos, int value)
     for (int i = 1; i < pos - 1; i++)
     {
         temp = temp->next;
-
         if (temp == start)
         {
-            cout << "Invalid position\n";
+            printf("Invalid position\n");
             return start;
         }
     }
+
+    struct Node *newNode = getNode();
+    newNode->data = value;
 
     newNode->next = temp->next;
     newNode->prev = temp;
     temp->next->prev = newNode;
     temp->next = newNode;
 
+    printf("Inserted %d at position %d\n", value, pos);
     return start;
 }
 
-// case:no node,only one node,few nodes
+
 struct Node *dfb(struct Node *start)
 {
     if (start == NULL)
     {
-        cout << "No node to delete";
+        printf("No node to delete\n");
         return NULL;
     }
+
     struct Node *last = start->prev;
-    if (last == start)
+
+    if (start == last)
     {
-        delete (start);
+        printf("Deleted from beginning: %d\n", start->data);
+        free(start);
         return NULL;
     }
-    struct Node *oldNode = start;
-    last->next = oldNode->next;
-    oldNode->next->prev = last;
-    start = last->next;
-    delete oldNode;
+
+    struct Node *temp = start;
+    last->next = start->next;
+    start->next->prev = last;
+    start = start->next;
+
+    printf("Deleted from beginning: %d\n", temp->data);
+    free(temp);
     return start;
 }
-// case:no node,only one node,fewnodes;
+
 struct Node *dfl(struct Node *start)
 {
     if (start == NULL)
     {
-        cout << "No node to delete";
-        return NULL;
-    }
-    struct Node *last = start->prev;
-    if (last == start)
-    {
-        delete start;
+        printf("No node to delete\n");
         return NULL;
     }
 
-    start->prev = last->prev;
+    struct Node *last = start->prev;
+
+    if (start == last)
+    {
+        printf("Deleted from last: %d\n", start->data);
+        free(start);
+        return NULL;
+    }
+
     last->prev->next = start;
-    delete last;
+    start->prev = last->prev;
+
+    printf("Deleted from last: %d\n", last->data);
+    free(last);
     return start;
 }
 
-// case:no node,only one node|pos=1,node in between
 struct Node *dfkp(struct Node *start, int pos)
 {
-    if (pos == 1)
-    {
-        return dfb(start);
-    }
     if (start == NULL)
     {
-        cout << "No node to delete";
+        printf("No node to delete\n");
         return NULL;
     }
+
+    if (pos == 1)
+        return dfb(start);
+
     struct Node *temp = start;
+
     for (int i = 1; i < pos - 1; i++)
     {
         temp = temp->next;
         if (temp->next == start)
         {
-            cout << "Invalid position";
+            printf("Invalid position\n");
             return start;
         }
     }
-    struct Node *nodetoDelete = temp->next;
-    temp->next = temp->next->next;
-    temp->next->prev = temp;
 
-    delete nodetoDelete;
+    struct Node *nodeToDelete = temp->next;
+    temp->next = nodeToDelete->next;
+    nodeToDelete->next->prev = temp;
+
+    printf("Deleted %d from position %d\n", nodeToDelete->data, pos);
+    free(nodeToDelete);
     return start;
 }
 
-struct Node *display(struct Node *start)
+void display(struct Node *start)
 {
     if (start == NULL)
     {
-        cout << "No node to display";
-        return NULL;
+        printf("List is empty\n");
+        return;
     }
+
     struct Node *temp = start;
     do
     {
-
-        cout << temp->data << "-> \t";
+        printf("%d -> ", temp->data);
         temp = temp->next;
     } while (temp != start);
-    return start;
+    printf("(back to start)\n");
 }
 
 int main()
@@ -194,35 +214,36 @@ int main()
 
     do
     {
-        cout << "1. Insert at last\n";
-        cout << "2. Insert at beginning\n";
-        cout << "3. Insert at K position\n";
-        cout << "4. Delete from beginning\n";
-        cout << "5. Delete from end\n";
-        cout << "6. Delete from K position\n";
-        cout << "7. Display list\n";
-        cout << "0. Exit\n";
-        cout << "Enter choice: ";
-        cin >> choice;
+        printf("\n1. Insert at last\n");
+        printf("2. Insert at beginning\n");
+        printf("3. Insert at K position\n");
+        printf("4. Delete from beginning\n");
+        printf("5. Delete from last\n");
+        printf("6. Delete from K position\n");
+        printf("7. Display list\n");
+        printf("0. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
         switch (choice)
         {
         case 1:
-            cout << "Enter value: ";
-            cin >> value;
+            printf("Enter value: ");
+            scanf("%d", &value);
             start = IAL(start, value);
             break;
 
         case 2:
-            cout << "Enter value: ";
-            cin >> value;
+            printf("Enter value: ");
+            scanf("%d", &value);
             start = IAF(start, value);
             break;
 
         case 3:
-            cout << "Enter position: ";
-            cin >> pos;
-            cout << "Enter value: ";
-            cin >> value;
+            printf("Enter position: ");
+            scanf("%d", &pos);
+            printf("Enter value: ");
+            scanf("%d", &value);
             start = IAKP(start, pos, value);
             break;
 
@@ -235,8 +256,8 @@ int main()
             break;
 
         case 6:
-            cout << "Enter position: ";
-            cin >> pos;
+            printf("Enter position: ");
+            scanf("%d", &pos);
             start = dfkp(start, pos);
             break;
 
@@ -245,12 +266,14 @@ int main()
             break;
 
         case 0:
-            cout << "Exiting program...\n";
+            printf("Exiting program...\n");
             break;
 
         default:
-            cout << "Invalid choice!\n";
+            printf("Invalid choice\n");
         }
 
     } while (choice != 0);
+
+    return 0;
 }

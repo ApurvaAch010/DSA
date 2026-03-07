@@ -38,18 +38,19 @@ void quicksort(int arr[], int i, int j)
 }
 int main()
 {
-    int arr[N], n;
+    int arr[N], n,i;
    printf("Enter the number of elements:");
     scanf("%d",&n);
-   printf("Enter values simulataneously:");
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
-        scanf("%d",arr[i]);
+        printf("Enter [%d] element", i + 1);
+        scanf("%d", &arr[i]);
     }
     quicksort(arr, 0, n-1);
-    for (int i = 0; i < n; i++)
+    printf("Sorted array:\n");
+    for ( i = 0; i < n; i++)
     {
-        printf("%d ",arr[i]);
+        printf("%d, ",arr[i]);
     }
     printf("\n");
     return 0;

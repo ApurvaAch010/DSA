@@ -3,8 +3,6 @@
 #include <string.h>
 
 #define SIZE 100
-
-/* Stack implementation */
 int stack[SIZE];
 int top = -1;
 
@@ -33,7 +31,6 @@ int isEmpty() {
     return top == -1;
 }
 
-/* Perform operation */
 int operation(char op, int a, int b) {
     switch (op) {
         case '+': return a + b;
@@ -44,14 +41,13 @@ int operation(char op, int a, int b) {
     }
 }
 
-/* Evaluate prefix expression */
 int evalPrefix(char inf[]) {
-    top = -1;   // reset stack
+    top = -1;  
     int len = strlen(inf);
 
     for (int i = len - 1; i >= 0; i--) {
         if (isdigit(inf[i])) {
-            push(inf[i] - '0');   // convert char to int
+            push(inf[i] - '0');   
         } else {
             if (size() < 2) {
                 printf("Invalid prefix expression\n");

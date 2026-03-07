@@ -32,32 +32,39 @@ int operation(char op, int a, int b) {
     }
 }
 
-int evalPrefix(char expr[]) {
+int evalPostfix(char expr[]) {
     top = -1;
     int len = strlen(expr);
-    for (int i = len - 1; i >= 0; i--) {
+
+    for (int i = 0; i < len; i++) {  
         if (isdigit(expr[i])) {
-            push(expr[i] - '0');
-        } else {
+            push(expr[i] - '0');  
+        } else {  
             if (size() < 2) {
-                printf("Invalid prefix expression\n");
+                printf("Invalid postfix expression\n");
                 return 0;
             }
-            int a = pop();
-            int b = pop();
+            int b = pop();  
+            int a = pop(); 
             push(operation(expr[i], a, b));
         }
     }
+
     if (size() != 1) {
-        printf("Invalid prefix expression\n");
+        printf("Invalid postfix expression\n");
         return 0;
     }
-    return pop();
+
+    return pop();  // final result
 }
 
 int main() {
-    char prefix[SIZE];
-    scanf("%s", prefix);
-    printf("%d\n", evalPrefix(prefix));
+    char postfix[SIZE];
+    printf("Enter postfix expression (single-digit operands): ");
+    scanf("%s", postfix);
+
+    int result = evalPostfix(postfix);
+    printf("Result: %d\n", result);
+
     return 0;
 }

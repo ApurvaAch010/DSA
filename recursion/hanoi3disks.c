@@ -12,7 +12,7 @@ int main(){
     
     
      printf("Enter the values of the disks [1st,2nd,3rd]");
-     scanf("%d %d %d",fdisk,sdisk,tdisk);
+     scanf("%d %d %d",&fdisk,&sdisk,&tdisk);
      TOH(no,fdisk,sdisk,tdisk);
      return 0;
     

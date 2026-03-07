@@ -4,8 +4,6 @@
 
 char stack[100];
 int top = -1;
-
-/* Stack operations */
 void push(char c) {
     if (top < 99)
         stack[++top] = c;
@@ -27,7 +25,6 @@ int isEmpty() {
     return top == -1;
 }
 
-/* Operator precedence */
 int prec(char c) {
     if (c == '^')
         return 3;

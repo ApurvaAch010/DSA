@@ -2,22 +2,22 @@
 #include <math.h>
 int main()
 {
-    int lno, n, arr1[100], hash[100], location;
+    int i,count,lno, n, arr1[100], hash[100], location;
  printf("Enter the number of values:");
     scanf("%d",&n);
     printf("Enter the number of locations:");
     scanf("%d",&lno);
-    for (int i = 0; i < lno; i++)
+    for (i = 0; i < lno; i++)
         hash[i] = -1;
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
         printf("Enter value [%d]:",i+1);
         scanf("%d",&arr1[i]);
     }
 
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
-        int count = 0;
+        count = 0;
         location = floor(arr1[i] % lno);
         while (hash[location] != -1)
         {
@@ -36,7 +36,7 @@ int main()
         }
     }
     printf("\n Hash table:\n");
-    for (int i = 0; i < lno; i++)
+    for (i = 0; i < lno; i++)
     {
         printf("%d -> %d \n",i,hash[i]);
     }

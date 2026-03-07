@@ -3,20 +3,21 @@
 
 int main()
 {
-    int arr[SIZE], n;
+    int arr[SIZE], n,i,gap,temp,j;
  printf("Enter the number of elements:");
     scanf("%d", &n);
-    printf("Enter values simulataneously:");
-    for (int i = 0; i < n; i++)
+     for (i = 0; i < n; i++)
     {
-        scanf("%d", arr[i]);
+        printf("Enter arr[%d]:",i+1);
+        scanf("%d",&arr[i]);
+    
     }
-    for (int gap = n - 1 / 2; gap > 0; gap /= 2)
+    for (gap = n/2; gap > 0; gap /= 2)
     {
-        for (int i = gap; i < n; i++)
+        for (i = gap; i < n; i++)
         {
-            int temp = arr[i];
-            int j;
+            temp = arr[i];
+            
             for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
             {
                 arr[j] = arr[j - gap];
@@ -25,9 +26,9 @@ int main()
         }
     }
     printf("Sorted array is: [");
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
-        printf("%d", arr[i]);
+        printf("%d, ", arr[i]);
     }
     printf("] \n");
 

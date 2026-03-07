@@ -35,21 +35,21 @@ void heapsort(int arr[], int n)
 
 int main()
 {
-    int arr[100], n;
+    int arr[100], n,i;
     
     printf("Enter the number of elements: ");
     scanf("%d",&n);
-    printf("Enter values simulataneously:");
-    for (int i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
     {
-        scanf("%d",arr[i]);
+        printf("Enter [%d] element", i + 1);
+        scanf("%d", &arr[i]);
     }
     heapsort(arr, n);
 
     printf("The sorted data is:\n");
     for (int i = 0; i < n; i++)
     {
-        printf("%d",arr[i]);
+        printf("%d, ",arr[i]);
     }
     printf("\n");
 
